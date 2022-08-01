@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de problemas de Aritmética</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header id="header">
+        <div id="brand">
+            <div id="logo-container"><img src="" alt="" id="logo"></div>
+            <h1 id="brand-name">Problemas de Aritmética</h1>
+        </div>
+        <nav id="navigation-bar">
+            <ul id="main-menu">
+                <li class="menu-item"><a href="./" class="link active">Inicio</a></li>
+                <li class="menu-item"><a href="views/configuracion.html" class="link">Configuración</a></li>
+                <li class="menu-item"><a href="views/resultados.html" class="link">Resultados</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main">
+        <div id="task-container">
+            <h2 id="task-title">Suma</h2>
+            <p class="task"><code>3 + 4</code></p>
+        </div>
+
+        <div class="form-container">
+            <form action="#" method="post" id="test">
+                <fieldset>
+                    <legend>Escriba su respuesta</legend>
+                    <label for="user-response">Respuesta:</label>
+                    <input type="number" name="user-response" id="user-response">
+                </fieldset>
+                <div class="form-foot"><input type="submit" value="Enviar respuesta"></div>
+            </form>
+        </div>
+    </main>
+    <script src="js/tasks.js"></script>
+</body>
+</html>
