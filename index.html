@@ -11,34 +11,44 @@
     <header id="header">
         <div id="brand">
             <div id="logo-container"><img src="" alt="" id="logo"></div>
-            <h1 id="brand-name">Problemas de Aritmética</h1>
+            <h1 id="brand-name">Examen de Aritmética</h1>
         </div>
-        <nav id="navigation-bar">
-            <ul id="main-menu">
-                <li class="menu-item"><a href="./" class="link active">Inicio</a></li>
-                <li class="menu-item"><a href="views/configuracion.html" class="link">Configuración</a></li>
-                <li class="menu-item"><a href="views/resultados.html" class="link">Resultados</a></li>
-            </ul>
-        </nav>
     </header>
 
-    <main id="main">
-        <div id="task-container">
-            <h2 id="task-title">Suma</h2>
-            <p class="task"><code>3 + 4</code></p>
-        </div>
-
+    <main class="main">
         <div class="form-container">
-            <form action="#" method="post" id="test">
-                <fieldset>
-                    <legend>Escriba su respuesta</legend>
-                    <label for="user-response">Respuesta:</label>
-                    <input type="number" name="user-response" id="user-response">
+            <form action="views/examen.html" method="get" id="test-settings">
+                <fieldset class="user">
+                    <legend>Usuario</legend>
+
+                    <label for="user-first-name">Nombre(s):</label>
+                    <input type="text" name="user-first-name" id="user-first-name" minlength="1" aria-required="true" required>
+
+                    <label for="user-last-name">Apellido(s):</label>
+                    <input type="text" name="user-last-name" id="user-last-name" minlength="1" aria-required="true" required>
                 </fieldset>
-                <div class="form-foot"><input type="submit" value="Enviar respuesta"></div>
+
+                <fieldset class="test-specs">
+                    <legend>Nivel de dificultad del examen</legend>
+                    <input type="radio" name="test-level" id="easy" value="easy" checked>
+                    <label for="easy">Fácil</label>
+
+                    <input type="radio" name="test-level" id="medium" value="medium">
+                    <label for="medium">Medio</label>
+
+                    <input type="radio" name="test-level" id="hard" value="hard">
+                    <label for="hard">Difícil</label>
+                </fieldset>
+
+                <fieldset class="test-number-of-questions">
+                    <label for="test-number-of-questions">Número de preguntas (5 a 10):</label>
+                    <input type="number" name="test-number-of-questions" id="test-number-of-questions" aria-required="true" required min="5" max="10">
+                </fieldset>
+
+                <div class="form-footer"><input type="submit" value="Enviar respuesta"></div>
             </form>
         </div>
     </main>
-    <script src="js/tasks.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
