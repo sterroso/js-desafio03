@@ -150,6 +150,10 @@ class Question {
         return this._symbol;
     }
 
+    get correctAnswer() {
+        return this._correctAnswer;
+    }
+
     /**
      * Valida si la respuesta del usuario es correcta.
      * 
@@ -496,7 +500,13 @@ class Test {
     }
 
     getCorrectAnswersCount() {
-        return this.questions.filter(q => q.isCorrect()).length;
+        return this.questions.reduce((accumulator, currentQuestion) => {
+            if (currentQuestion.userAnswer === currentQuestion.correctAnswer) {
+                accumulator += 1;
+            }
+
+            return accumulator;
+        }, 0);
     }
 
     /**
@@ -568,6 +578,7 @@ const generateTest = testObject => {
         questionFieldset.appendChild(questionLabel);
 
         let questionField = document.createElement('input');
+        questionField.classList.add('question-field');
         questionField.setAttribute('type', 'number');
         questionField.setAttribute('required', 'true');
         questionField.setAttribute('aria-required', 'true');
@@ -589,7 +600,7 @@ const generateTest = testObject => {
     testForm.appendChild(submitContainer);
 
     testForm.addEventListener('submit', event => {
-        let resultsFields = Array.from(testForm.getElementsByTagName('input'));
+        let resultsFields = Array.from(testForm.getElementsByTagName('input')).filter(e => e.type === 'number');
         console.log(resultsFields);
 
         testObject.questions.forEach((q, i) => {
