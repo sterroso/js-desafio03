@@ -1,4 +1,4 @@
-const DEFAULT_STORAGE_TYPE = 'sessionStorage';
+const DEFAULT_STORAGE_TYPE = 'localStorage';
 
 const settingsForm = document.getElementById('test-settings');
 
@@ -24,8 +24,6 @@ settingsForm.addEventListener('submit', event => {
     }
 
     saveRecord('testSettings', JSON.stringify(testSettings), DEFAULT_STORAGE_TYPE);
-
-    alert(loadRecord('testSettings'));
 });
 
 /**

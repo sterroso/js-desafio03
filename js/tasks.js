@@ -103,7 +103,7 @@ class Question {
      * (Array) con los niveles de dificultad válidos.
      */
     set level(value) {
-        if (value !== null && Test.getLevels().contains(value.trim().toLowerCase())) {
+        if (value !== null && Test.getLevels().find(element => element === value)) {
             if (value !== this._level) {
                 this._level = value.trim().toLowerCase();
                 
@@ -146,6 +146,10 @@ class Question {
         return this._userAnswer;
     }
 
+    get symbol() {
+        return this._symbol;
+    }
+
     /**
      * Valida si la respuesta del usuario es correcta.
      * 
@@ -168,8 +172,10 @@ class Question {
     }
 
     #generateCorrectAnswer() {
-        let functionIndex = Math.floor(Math.random() * (this._levelSpecs.maxNumber + 1 - this._levelSpecs.maxNumber)) + this._levelSpecs.minNumber;
-        this._function = this._levelSpecs[functionIndex];
+        let functionIndex = Math.floor(Math.random() * (this._levelSpecs.tasks.length));
+        console.debug(`functionIndex: ${functionIndex}`);
+        this._function = this._levelSpecs.tasks[functionIndex];
+        console.debug(`this._function: ${this._function}`);
 
         switch(this._function) {
             case 'sum':
@@ -201,14 +207,15 @@ class Question {
                 this._functionName = 'Desconocido';
                 this._correctAnswer = null;
         }
+        console.debug(`this._correctAnswer: ${this._correctAnswer}`);
     }
 
     toString() {
         if (this._function !== 'intSquare') {
-            return `${this._numbers[0]} ${this._symbol} ${this._numbers[1]}`;
+            return `${this._numbers[0]} ${this.symbol} ${this._numbers[1]}`;
         }
         
-        return `${this._numbers[0]}${this._symbol}}`;
+        return `${this._numbers[0]}${this._symbol}`;
     }
 }
 
@@ -223,19 +230,19 @@ class Test {
             'localName': 'Fácil',
             'minNumber': 2,
             'maxNumber': 9,
-            'taks': ['sum', 'subtraction', 'multiplication'],
+            'tasks': ['sum', 'subtraction'],
         },
         'medium': {
             'localName': 'Medio',
             'minNumber': 10,
             'maxNumber': 29,
-            'taks': ['multiplication', 'division'],
+            'tasks': ['sum', 'subtraction', 'multiplication'],
         },
         'hard': {
             'localName': 'Difícil',
             'minNumber': 30,
             'maxNumber': 49,
-            'taks': ['intSquare'],
+            'tasks': ['multiplication', 'intSquare'],
         }
     };
 
@@ -256,6 +263,7 @@ class Test {
         this.numberOfQuestions = numberOfQuestions;
         this.user = user;
         this._questions = [];
+        this.#generateQuestions();
     }
 
     /**
@@ -270,6 +278,7 @@ class Test {
     set level(value) {
         if (Test.isValidLevel(value)) {
             this._level = value.trim().toLowerCase();
+            this.#mapLevelName();
             return true;
         }
 
@@ -285,6 +294,13 @@ class Test {
         if (this._level !== null) return this._level;
 
         return '';
+    }
+
+    /**
+     * Devuelve el nombre del nombre del nivel en el idioma local.
+     */
+    get levelName() {
+        return this._levelName;
     }
 
     /**
@@ -413,7 +429,7 @@ class Test {
      * dificultad válidos para un Test (Examen).
      */
     static getLevels() {
-        return Test.#LEVELS.keys();
+        return Object.keys(Test.#LEVELS);
     }
 
     /**
@@ -463,8 +479,24 @@ class Test {
         }
     }
 
+    #mapLevelName() {
+        switch(this.level) {
+            case 'easy':
+                this._levelName = 'Fácil';
+                break;
+            case 'medium':
+                this._levelName = 'Medio';
+                break;
+            case 'hard':
+                this._levelName = 'Difícil';
+                break;
+            default:
+                this._levelName = 'Desconocido';
+        }
+    }
+
     getCorrectAnswersCount() {
-        return this.questions.filter(isCorrect()).length;
+        return this.questions.filter(q => q.isCorrect()).length;
     }
 
     /**
@@ -479,11 +511,11 @@ class Test {
     }
 
     toString() {
-        return `Examen de Aritmética. Nivel: ${this.level}. Número de preguntas: ${this.numberOfQuestions}. Respuestas correctas: ${this.getCorrectAnswersCount()}`;
+        return `Examen de Aritmética. Nivel: ${this.levelName}. Número de preguntas: ${this.numberOfQuestions}. Respuestas correctas: ${this.getCorrectAnswersCount()}`;
     }
 }
 
-const DEFAULT_STORAGE_TYPE = 'sessionStorage';
+const DEFAULT_STORAGE_TYPE = 'localStorage';
 
 const questionsContainer = document.getElementById('questions-container');
 
@@ -494,14 +526,14 @@ let testUser;
 let test;
 
 window.addEventListener('load', event => {
-    alert('Se ha cargado la ventana');
-    
     let testSettings = JSON.parse(loadRecord('testSettings', DEFAULT_STORAGE_TYPE));
 
     testUser = new User(testSettings.userFirstName, testSettings.userLastName);
     test = new Test(testSettings.testLevel, testSettings.testNumberOfQuestions, testUser);
 
     generateTest(test);
+
+    removeRecord('testSettings');
 });
 
 /**
@@ -512,7 +544,7 @@ window.addEventListener('load', event => {
 const generateTest = testObject => {
     let userNameTitle = document.createElement('h2');
     userNameTitle.classList.add('user-name-title');
-    userNameTitle.innerHTML = testObject.user.toString();
+    userNameTitle.innerHTML = `Alumno: ${testObject.user.toString()}`;
 
     questionsContainer.appendChild(userNameTitle);
 
@@ -555,6 +587,28 @@ const generateTest = testObject => {
     submitContainer.appendChild(submitButton);
 
     testForm.appendChild(submitContainer);
+
+    testForm.addEventListener('submit', event => {
+        let resultsFields = Array.from(testForm.getElementsByTagName('input'));
+        console.log(resultsFields);
+
+        testObject.questions.forEach((q, i) => {
+            q.userAnswer = parseInt(resultsFields[i].value);
+            console.debug(`${q}: ${q.userAnswer}`);
+        });
+
+        let marksTitle = document.createElement('h3');
+        marksTitle.classList.add('marks-title');
+        marksTitle.innerHTML = 'Resultados';
+        marksContainer.appendChild(marksTitle);
+
+        let marks = document.createElement('p');
+        marks.classList.add('marks');
+        marks.innerHTML = `${testObject}`;
+        marksContainer.appendChild(marks);
+
+        event.preventDefault();
+    });
     
     questionsContainer.appendChild(testForm);
 };
@@ -634,15 +688,16 @@ const loadRecord = (key, storageType) => {
     return null;
 };
 
-// const mockRecord = {
-//     'user': {
-//         'firstName': 'Sergio',
-//         'lastName': 'Terroso Cabrera',
-//     },
-//     'mark': {
-//         'timeStamp': '20220801004931',
-//         'level': 'easy',
-//         'numberOfQuestions': 5,
-//         'correctAnswers': 4,
-//     },
-// };
+/**
+ * Elimina un registro, identificado con la llave proporcionada, del almacenamiento 
+ * indicado.
+ * 
+ * @param {string} key Llave del registro a eliminar.
+ * @param {string} storageType Tipo de almacenamiento del que se desea remover el registro
+ */
+const removeRecord = (key, storageType) => {
+    if (storageAvailable(storageType)) {
+        let storage = window[storageType];
+        storage.removeItem(key);
+    }
+}
