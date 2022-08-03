@@ -525,11 +525,9 @@ class Test {
     }
 }
 
-const DEFAULT_STORAGE_TYPE = 'localStorage';
+const DEFAULT_STORAGE_TYPE = 'sessionStorage';
 
-const questionsContainer = document.getElementById('questions-container');
-
-const marksContainer = document.getElementById('marks-container');
+const questionsContainer = document.getElementById('test-form-container');
 
 let testUser;
 
@@ -560,7 +558,7 @@ const generateTest = testObject => {
 
     let testForm = document.createElement('form');
     testForm.id = 'test-form';
-    testForm.method = 'post';
+    testForm.method = 'get';
     testForm.action = '#'
 
     testObject.questions.forEach((q, i) => {
@@ -608,15 +606,7 @@ const generateTest = testObject => {
             console.debug(`${q}: ${q.userAnswer}`);
         });
 
-        let marksTitle = document.createElement('h3');
-        marksTitle.classList.add('marks-title');
-        marksTitle.innerHTML = 'Resultados';
-        marksContainer.appendChild(marksTitle);
-
-        let marks = document.createElement('p');
-        marks.classList.add('marks');
-        marks.innerHTML = `${testObject}`;
-        marksContainer.appendChild(marks);
+        alert(`${testObject}`);
 
         event.preventDefault();
     });

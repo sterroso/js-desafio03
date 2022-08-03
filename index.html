@@ -8,47 +8,50 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header id="header">
-        <div id="brand">
-            <div id="logo-container"><img src="" alt="" id="logo"></div>
-            <h1 id="brand-name">Configuración del Examen de Aritmética</h1>
-        </div>
-    </header>
+    <div class="container">
+        <header id="header">
+            <div id="brand">
+                <div id="logo-container"><img src="img/math-logo.png" alt="Logotipo" id="logo"></div>
+                <h1 id="brand-name">Configuración del Examen</h1>
+            </div>
+        </header>
 
-    <main class="main">
-        <div class="form-container">
-            <form action="views/examen.html" method="get" id="test-settings">
-                <fieldset class="user">
-                    <legend>Usuario</legend>
+        <main class="main">
+            <div class="settings-form-container">
+                <form action="views/examen.html" method="get" id="test-settings">
+                    <fieldset class="user">
+                        <legend>Usuario</legend>
 
-                    <label for="user-first-name">Nombre(s):</label>
-                    <input type="text" name="user-first-name" id="user-first-name" minlength="1" aria-required="true" required>
+                        <label for="user-first-name" class="number-input-label">Nombre(s):</label>
+                        <input type="text" name="user-first-name" id="user-first-name" minlength="1" aria-required="true" required>
 
-                    <label for="user-last-name">Apellido(s):</label>
-                    <input type="text" name="user-last-name" id="user-last-name" minlength="1" aria-required="true" required>
-                </fieldset>
+                        <label for="user-last-name" class="number-input-label">Apellido(s):</label>
+                        <input type="text" name="user-last-name" id="user-last-name" minlength="1" aria-required="true" required>
+                    </fieldset>
 
-                <fieldset class="test-specs">
-                    <legend>Nivel de dificultad del examen</legend>
-                    <input type="radio" name="test-level" id="easy" value="easy" checked>
-                    <label for="easy">Fácil</label>
+                    <fieldset class="test-specs radio-group">
+                        <legend>Nivel de dificultad</legend>
+                        <input type="radio" name="test-level" id="easy" value="easy" checked>
+                        <label for="easy" class="checkbox-label">Fácil</label>
 
-                    <input type="radio" name="test-level" id="medium" value="medium">
-                    <label for="medium">Medio</label>
+                        <input type="radio" name="test-level" id="medium" value="medium">
+                        <label for="medium" class="checkbox-label">Medio</label>
 
-                    <input type="radio" name="test-level" id="hard" value="hard">
-                    <label for="hard">Difícil</label>
-                </fieldset>
+                        <input type="radio" name="test-level" id="hard" value="hard">
+                        <label for="hard" class="checkbox-label">Difícil</label>
+                    </fieldset>
 
-                <fieldset class="test-number-of-questions">
-                    <label for="test-number-of-questions">Número de preguntas (5 a 10):</label>
-                    <input type="number" name="test-number-of-questions" id="test-number-of-questions" aria-required="true" required min="5" max="10">
-                </fieldset>
+                    <fieldset class="test-number-of-questions">
+                        <label for="test-number-of-questions" class="number-input-label">Número de preguntas (5 a 10):</label>
+                        <input type="number" name="test-number-of-questions" id="test-number-of-questions" aria-required="true" required min="5" max="10">
+                    </fieldset>
 
-                <div class="form-footer"><input type="submit" value="Enviar respuesta"></div>
-            </form>
-        </div>
-    </main>
+                    <div class="submit-container"><input type="submit" value="Ir a examen"></div>
+                </form>
+            </div>
+        </main>
+    </div>
+
     <script src="js/main.js"></script>
 </body>
 </html>

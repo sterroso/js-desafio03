@@ -1,0 +1,215 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #2e3034;
+}
+
+.container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0 1rem;
+    color: #ff5f08;
+    max-width: 992px;
+}
+
+#brand {
+  display: flex;
+  align-items: center;
+  column-gap: 1rem;
+  margin-top: 1rem;
+}
+
+.main {
+  margin-top: 1rem;
+}
+
+form {
+    margin: 0.5rem;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    border-radius: 1rem;
+}
+
+
+legend {
+    font-size: larger;
+    font-weight: bold;
+}
+
+fieldset {
+    margin: 1rem 0.5rem 0.25rem 0.5rem;
+    padding: 0 0.75rem 1rem;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.5rem;
+    border: thin solid #cc280d;
+    box-shadow: rgba(177, 179, 181, 0.1) 0px 4px 12px;
+}
+
+fieldset.radio-group {
+    display: grid;
+    grid-template-columns: min-content auto;
+    column-gap: 0.5rem;
+    row-gap: 0.5rem;
+}
+
+.number-input-label {
+    margin-top: 0.75rem;
+    margin-bottom: 0.25rem;
+}
+
+.number-input-label:first-child {
+    margin-top: 0;
+}
+
+.submit-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+input[type="number"], input[type="text"] {
+    padding: 0.25rem 0.1rem;
+    border-radius: 0.25rem;
+}
+
+input[type="submit"] {
+  --glow-color: rgb(125, 206, 19);
+  --glow-spread-color: rgba(91, 179, 24, 0.781);
+  --enhanced-glow-color: rgb(234, 229, 9);
+  --btn-color: rgb(43, 122, 11);
+  border: .25em solid var(--glow-color);
+  padding: 1em 3em;
+  color: var(--glow-color);
+  font-size: 15px;
+  font-weight: bold;
+  background-color: var(--btn-color);
+  border-radius: 1em;
+  outline: none;
+  box-shadow: 0 0 1em .25em var(--glow-color),
+        inset 0 0 .75em .25em var(--glow-color);
+  text-shadow: 0 0 .5em var(--glow-color);
+  position: relative;
+  transition: all 0.3s;
+}
+
+input[type="submit"]::after {
+  pointer-events: none;
+  content: "";
+  position: absolute;
+  top: 120%;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: var(--glow-spread-color);
+  filter: blur(2em);
+  opacity: .7;
+  transform: perspective(1.5em) rotateX(35deg) scale(1, .6);
+}
+
+input[type="submit"]:hover {
+  color: var(--btn-color);
+  background-color: var(--glow-color);
+  box-shadow: 0 0 1em .25em var(--glow-color),
+        0 0 1em 0.5em var(--glow-spread-color),
+        inset 0 0 .75em .25em var(--glow-color);
+}
+
+input[type="submit"]:active {
+  box-shadow: 0 0 0.6em .25em var(--glow-color),
+        0 0 2.5em 2em var(--glow-spread-color),
+        inset 0 0 .5em .25em var(--glow-color);
+}
+
+
+/* Pantallas de ancho "medio" tabletas, teléfonos en disposición horizontal. */
+@media screen and (min-width: 768px) {
+}
+
+
+/* Pantallas de ancho "grande" escritorio y tabletas en disposición horizontal. */
+@media screen and (min-width: 992px) {
+  .container{
+    margin: 0 auto;
+  }
+}
+/*
+<!-- HTML !-->
+<button class="button-85" role="button">Button 85</button>
+*/
+
+/* CSS */
+/*
+.button-85 {
+    padding: 0.6em 2em;
+    border: none;
+    outline: none;
+    color: rgb(255, 255, 255);
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+  
+  .button-85:before {
+    content: "";
+    background: linear-gradient(
+      45deg,
+      #ff0000,
+      #ff7300,
+      #fffb00,
+      #48ff00,
+      #00ffd5,
+      #002bff,
+      #7a00ff,
+      #ff00c8,
+      #ff0000
+    );
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing-button-85 20s linear infinite;
+    transition: opacity 0.3s ease-in-out;
+    border-radius: 10px;
+  }
+  
+  @keyframes glowing-button-85 {
+    0% {
+      background-position: 0 0;
+    }
+    50% {
+      background-position: 400% 0;
+    }
+    100% {
+      background-position: 0 0;
+    }
+  }
+  
+  .button-85:after {
+    z-index: -1;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #222;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+  }
+*/
+

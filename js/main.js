@@ -1,4 +1,4 @@
-const DEFAULT_STORAGE_TYPE = 'localStorage';
+const DEFAULT_STORAGE_TYPE = 'sessionStorage';
 
 const settingsForm = document.getElementById('test-settings');
 
